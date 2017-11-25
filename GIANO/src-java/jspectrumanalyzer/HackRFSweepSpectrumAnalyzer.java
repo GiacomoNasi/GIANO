@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -28,6 +29,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartMouseEvent;
+import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisSpace;
@@ -56,13 +59,15 @@ import jspectrumanalyzer.core.DatasetSpectrumPeak;
 import jspectrumanalyzer.core.FFTBins;
 import jspectrumanalyzer.core.HackRFSettings;
 import jspectrumanalyzer.core.HackRFSweepSettingsUI;
+import jspectrumanalyzer.core.IMain;
 import jspectrumanalyzer.core.PowerCalibration;
 import jspectrumanalyzer.core.SpurFilter;
 import jspectrumanalyzer.core.WaterfallPlot;
+import jspectrumanalyzer.core.ZoomChartPanel;
 import jspectrumanalyzer.nativebridge.HackRFSweepDataCallback;
 import jspectrumanalyzer.nativebridge.HackRFSweepNativeBridge;
 
-public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepDataCallback
+public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepDataCallback, IMain
 {
 	public static final int SPECTRUM_PALETTE_SIZE_MIN = 5;
 
@@ -107,6 +112,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 	private ArrayList<HackRFEventListener>	listeners				= new ArrayList<>();
 	private boolean isCapturing	= true;
 	private JPanel settingsContainerPanel;
+	private HackRFSweepSettingsUI settingsPanel;
 
 	public HackRFSweepSpectrumAnalyzer()
 	{
@@ -137,7 +143,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		XYLineAndShapeRenderer rend = new XYLineAndShapeRenderer();
 		rend.setBaseShapesVisible(false);
 
-		chartPanel = new ChartPanel(chart);
+		chartPanel = new ZoomChartPanel(chart, this);
 		chartPanel.setMaximumDrawWidth(4096);
 		chartPanel.setMaximumDrawHeight(2160);
 		chartPanel.setMouseWheelEnabled(false);
@@ -178,7 +184,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 			{
 			}
 		});
-
+		
 		//Align the waterfall plot and the spectrum chart
 		chart.addChangeListener(new ChartChangeListener()
 		{
@@ -202,7 +208,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		//		chart.getXYPlot().addRangeMarker(waterfallPaletteStartMarker);
 		//		chart.getXYPlot().addRangeMarker(waterfallPaletteEndMarker);
 		JCheckBox settingsVisibility = new JCheckBox("Show Settings");	
-		HackRFSweepSettingsUI settingsPanel = new HackRFSweepSettingsUI(this);
+		settingsPanel = new HackRFSweepSettingsUI(this);
 		settingsPanel.setVisible(false);
 		settingsVisibility.addActionListener(new ActionListener() {
 			
@@ -880,5 +886,18 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 			lock.unlock();
 			fireHardwareStateChanged(false);
 		}
+	}
+
+	@Override
+	public void updateFrequency(double start, double end) {
+		if(settingsPanel.getFrequencySelectorEnd().getValue() < end)
+			return;
+		if(start > end){
+			double temp = end;
+			end = start;
+			start = temp;
+		}
+		settingsPanel.getFrequencySelectorStart().setValue((int)start);
+		settingsPanel.getFrequencySelectorEnd().setValue((int)end);
 	}
 }

@@ -58,6 +58,8 @@ public class HackRFSweepSettingsUI extends JPanel
 	private JPanel centerPanel, bottomPanel;
 	
 	private JPanel frequencyLayoutPanel, samplingLayoutPanel, waterfallLayoutPanel, peaksLayoutPanel, centerLayoutPanel, bottomLayoutPanel;
+	private FrequencySelectorPanel frequencySelectorStart;
+	private FrequencySelectorPanel frequencySelectorEnd;
 
 	public static final Color mainColor = new Color(0x625954);
 	public static final Color settingColor = new Color(0x878f77);
@@ -216,7 +218,7 @@ public class HackRFSweepSettingsUI extends JPanel
 		//add(lblNewLabel, "cell 0 0,growx,aligny center");
 		frequencyStartPanel.add(lblNewLabel, BorderLayout.NORTH);
 
-		FrequencySelectorPanel frequencySelectorStart = new FrequencySelectorPanel(minFreq, maxFreq, freqStep, minFreq);
+		frequencySelectorStart = new FrequencySelectorPanel(minFreq, maxFreq, freqStep, minFreq);
 		//add(frequencySelectorStart, "cell 0 1,grow");
 		frequencySelectorStart.setValue(hackRFSettings.getFrequencyStart());
 		frequencyStartPanel.add(frequencySelectorStart, BorderLayout.CENTER);
@@ -228,7 +230,7 @@ public class HackRFSweepSettingsUI extends JPanel
 		frequencyEndPanel.add(lblFrequencyEndmhz, BorderLayout.NORTH);
 
 		
-		FrequencySelectorPanel frequencySelectorEnd = new FrequencySelectorPanel(minFreq, maxFreq, freqStep, maxFreq);
+		frequencySelectorEnd = new FrequencySelectorPanel(minFreq, maxFreq, freqStep, maxFreq);
 		//add(frequencySelectorEnd, "cell 0 4,grow");
 		frequencySelectorEnd.setValue(hackRFSettings.getFrequencyEnd());
 		frequencyEndPanel.add(frequencySelectorEnd, BorderLayout.CENTER);
@@ -456,6 +458,14 @@ public class HackRFSweepSettingsUI extends JPanel
 				hackRFSettings.setSpurRemoval(chckbxRemoveSpurs.isSelected());
 			}
 		});
+	}
+	
+	public FrequencySelectorPanel getFrequencySelectorStart() {
+		return frequencySelectorStart;
+	}
+	
+	public FrequencySelectorPanel getFrequencySelectorEnd() {
+		return frequencySelectorEnd;
 	}
 
 }

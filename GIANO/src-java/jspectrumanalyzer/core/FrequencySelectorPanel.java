@@ -217,7 +217,7 @@ public class FrequencySelectorPanel extends JPanel
 		return listener;
 	}
 
-	private void fireValueChange(int oldValue, int newValue) throws PropertyVetoException
+	public void fireValueChange(int oldValue, int newValue) throws PropertyVetoException
 	{
 		fireVetoableChange("value", oldValue, newValue);
 		FrequencySelectorPanel.this.value = newValue;
