@@ -113,6 +113,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 	private boolean isCapturing	= true;
 	private JPanel settingsContainerPanel;
 	private HackRFSweepSettingsUI settingsPanel;
+	private JSplitPane splitPane;
 
 	public HackRFSweepSpectrumAnalyzer()
 	{
@@ -226,7 +227,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setLayout(new BorderLayout());
 		f.setTitle("GIANO");
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, chartPanel, waterfallPlot);
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, chartPanel, waterfallPlot);
 		splitPane.setResizeWeight(0.8);
 		splitPane.setBorder(null);
 		f.add(splitPane, BorderLayout.CENTER);
@@ -899,5 +900,14 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		}
 		settingsPanel.getFrequencySelectorStart().setValue((int)start);
 		settingsPanel.getFrequencySelectorEnd().setValue((int)end);
+	}
+
+	@Override
+	public void zoom(int wheelRotation) {
+		double freqStart = settingsPanel.getFrequencySelectorStart().getValue() - wheelRotation * 10;
+		double freqEnd = settingsPanel.getFrequencySelectorEnd().getValue() + wheelRotation * 10;
+		
+		settingsPanel.getFrequencySelectorStart().setValue((int) freqStart);
+		settingsPanel.getFrequencySelectorEnd().setValue((int) freqEnd);
 	}
 }
