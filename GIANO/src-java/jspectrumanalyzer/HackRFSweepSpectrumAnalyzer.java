@@ -114,6 +114,8 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 	private JPanel settingsContainerPanel;
 	private HackRFSweepSettingsUI settingsPanel;
 	private JSplitPane splitPane;
+	
+	public static final Font font = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
 	public HackRFSweepSpectrumAnalyzer()
 	{
@@ -296,7 +298,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 
 		plot.setAxisOffset(RectangleInsets.ZERO_INSETS); //no space between range axis and plot
 
-		Font labelFont = new Font(Font.MONOSPACED, Font.BOLD, 16);
+		Font labelFont = font;
 		rangeAxis.setLabelFont(labelFont);
 		rangeAxis.setTickLabelFont(labelFont);
 		rangeAxis.setLabelPaint(palette1);
@@ -335,12 +337,12 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		freqMarker.setLabelPaint(Color.white);
 		freqMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
 		freqMarker.setLabelTextAnchor(TextAnchor.TOP_LEFT);
-		freqMarker.setLabelFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+		freqMarker.setLabelFont(font);
 		ValueMarker signalMarker	= new ValueMarker(0, Color.WHITE, new BasicStroke(1f));
 		signalMarker.setLabelPaint(Color.white);
 		signalMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
 		signalMarker.setLabelTextAnchor(TextAnchor.BOTTOM_RIGHT);
-		signalMarker.setLabelFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+		signalMarker.setLabelFont(font);
 
 		chartPanel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -891,7 +893,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 
 	@Override
 	public void updateFrequency(double start, double end) {
-		if(settingsPanel.getFrequencySelectorEnd().getValue() < end)
+		if(settingsPanel.getFrequencySelectorEnd().getValue() < end || settingsPanel.getFrequencySelectorStart().getValue() > start)
 			return;
 		if(start > end){
 			double temp = end;
