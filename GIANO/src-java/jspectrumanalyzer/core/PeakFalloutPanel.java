@@ -17,21 +17,21 @@ public class PeakFalloutPanel extends JPanel{
 		this.setBackground(Color.BLACK);
 		
 		shortButton = new JRadioButton("0,5");
-		shortButton.setForeground(Color.WHITE);
-		shortButton.setBackground(Color.BLACK);
+		shortButton.setForeground(Color.BLACK);
+		shortButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		
 		mediumButton = new JRadioButton("1");
-		mediumButton.setForeground(Color.WHITE);
-		mediumButton.setBackground(Color.BLACK);
+		mediumButton.setForeground(Color.BLACK);
+		mediumButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		longButton = new JRadioButton("5");
-		longButton.setForeground(Color.WHITE);
-		longButton.setBackground(Color.BLACK);
+		longButton.setForeground(Color.BLACK);
+		longButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		infButton = new JRadioButton("INFINITE");
-		infButton.setForeground(Color.WHITE);
-		infButton.setBackground(Color.BLACK);
+		infButton.setForeground(Color.BLACK);
+		infButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		infButton.setSelected(true);
 		
 		
@@ -68,6 +68,18 @@ public class PeakFalloutPanel extends JPanel{
 		longButton.addActionListener(actionListener);
 		infButton.addActionListener(actionListener);
 		
+		shortButton.setEnabled(false);
+		mediumButton.setEnabled(false);
+		longButton.setEnabled(false);
+		infButton.setEnabled(false);
+		
+	}
+
+	public void setEnabledButton(boolean selected) {
+		shortButton.setEnabled(selected);
+		mediumButton.setEnabled(selected);
+		longButton.setEnabled(selected);
+		infButton.setEnabled(selected);
 	}
 	
 	/*public static void main(String[] args) {

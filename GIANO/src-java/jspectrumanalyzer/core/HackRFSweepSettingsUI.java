@@ -34,10 +34,13 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import org.jfree.chart.block.LineBorder;
 
 import jspectrumanalyzer.HackRFSweepSpectrumAnalyzer;
 import jspectrumanalyzer.Version;
@@ -270,6 +273,11 @@ public class HackRFSweepSettingsUI extends JPanel
 
 		JSpinner spinnerFFTBinHz = new JSpinner();
 		spinnerFFTBinHz.setFont(new Font("Monospaced", Font.BOLD, 16));
+		//spinnerFFTBinHz.getEditor().getComponent(0).setBackground(settingColor);
+		//spinnerFFTBinHz.setOpaque(true);
+		//spinnerFFTBinHz.setBackground(settingColor);		
+		//((JSpinner.DefaultEditor)spinnerFFTBinHz.getEditor()).getTextField().setBackground(mainColor);
+		//((JSpinner.DefaultEditor)spinnerFFTBinHz.getEditor()).getTextField().setOpaque(true);
 		spinnerFFTBinHz.setModel(new SpinnerListModel(
 				new String[] { "1000", "2000", "5000", "10 000", "20 000", "50 000", "100 000", "200 000", "500 000", "1 000 000", "2 000 000", "5 000 000" }));
 		//add(spinnerFFTBinHz, "cell 0 7,growx");
@@ -328,8 +336,8 @@ public class HackRFSweepSettingsUI extends JPanel
 		samplesPanel.add(spinner_numberOfSamples, BorderLayout.CENTER);
 		
 		JCheckBox chckbxAntennaPower = new JCheckBox("Antenna power");
-		chckbxAntennaPower.setBackground(Color.BLACK);
-		chckbxAntennaPower.setForeground(Color.WHITE);
+		chckbxAntennaPower.setBackground(mainColor);
+		chckbxAntennaPower.setForeground(Color.BLACK);
 		//add(chckbxAntennaPower, "cell 0 15");
 		chckbxAntennaPower.setSelected(hackRFSettings.getAntennaPowerEnable());
 		chckbxAntennaPower.addActionListener(new ActionListener() {
@@ -403,19 +411,20 @@ public class HackRFSweepSettingsUI extends JPanel
 		});
 
 		JCheckBox chckbxShowPeaks = new JCheckBox("Show peaks");		
-		chckbxShowPeaks.setForeground(Color.WHITE);
-		chckbxShowPeaks.setBackground(Color.BLACK);
+		chckbxShowPeaks.setForeground(Color.BLACK);
+		chckbxShowPeaks.setBackground(mainColor);
 		//add(chckbxShowPeaks, "cell 0 24,growx");
 		peaksPanel.add(chckbxShowPeaks, BorderLayout.NORTH);
 		
 		PeakFalloutPanel peakFalloutPanel = new PeakFalloutPanel();
-		peakFalloutPanel.setVisible(false);
+		peakFalloutPanel.setVisible(true);
+		peakFalloutPanel.setBackground(mainColor);
 		//add(peakFalloutPanel, "cell 0 25,growx");
 		peaksPanel.add(peakFalloutPanel, BorderLayout.CENTER);
 		
 		JCheckBox chckbxRemoveSpurs = new JCheckBox("Spur filter (may distort real signals)");
-		chckbxRemoveSpurs.setForeground(Color.WHITE);
-		chckbxRemoveSpurs.setBackground(Color.BLACK);
+		chckbxRemoveSpurs.setForeground(Color.BLACK);
+		chckbxRemoveSpurs.setBackground(mainColor);
 		//add(chckbxRemoveSpurs, "cell 0 26");
 		centerPanel.add(chckbxRemoveSpurs);
 		
@@ -430,7 +439,10 @@ public class HackRFSweepSettingsUI extends JPanel
 		
 		JButton btnPause = new JButton("Pause");
 		//add(btnPause, "cell 0 31,growx");
-		btnPause.setBackground(Color.black);
+		btnPause.setBackground(settingColor);
+		btnPause.setContentAreaFilled(false);
+		btnPause.setOpaque(true);
+		btnPause.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
 		bottomPanel.add(btnPause);
 		
 		
@@ -465,7 +477,9 @@ public class HackRFSweepSettingsUI extends JPanel
 			@Override public void actionPerformed(ActionEvent e)
 			{
 				hackRFSettings.setChartPeaksVisibility(chckbxShowPeaks.isSelected());
-				peakFalloutPanel.setVisible(chckbxShowPeaks.isSelected());
+				//peakFalloutPanel.setVisible(chckbxShowPeaks.isSelected());
+				peakFalloutPanel.setEnabledButton(chckbxShowPeaks.isSelected());
+				
 			}
 		});
 

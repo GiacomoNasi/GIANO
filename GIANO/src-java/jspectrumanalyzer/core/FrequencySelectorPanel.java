@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 
 public class FrequencySelectorPanel extends JPanel
 {
@@ -35,7 +36,7 @@ public class FrequencySelectorPanel extends JPanel
 	 */
 	public FrequencySelectorPanel(int minValue, int maxValue, int step, int intialValue)
 	{
-		setBackground(Color.BLACK);
+		setBackground(HackRFSweepSettingsUI.mainColor);
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.step = step;
@@ -43,26 +44,38 @@ public class FrequencySelectorPanel extends JPanel
 		setLayout(new GridLayout(0, 4, 0, 0));
 
 		JButton button_plus4 = new JButton("+");
-		button_plus4.setBackground(Color.BLACK);
+		button_plus4.setContentAreaFilled(false);
+		button_plus4.setOpaque(true);
+		button_plus4.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_plus4.setBorder(new LineBorder(Color.BLACK));
 		add(button_plus4);
 
 		JButton button_plus3 = new JButton("+");
-		button_plus3.setBackground(Color.BLACK);
+		button_plus3.setContentAreaFilled(false);
+		button_plus3.setOpaque(true);
+		button_plus3.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_plus3.setBorder(new LineBorder(Color.BLACK));
 		add(button_plus3);
 
 		JButton button_plus2 = new JButton("+");
-		button_plus2.setBackground(Color.BLACK);
+		button_plus2.setContentAreaFilled(false);
+		button_plus2.setOpaque(true);
+		button_plus2.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_plus2.setBorder(new LineBorder(Color.BLACK));
 		add(button_plus2);
 
 		JButton button_plus1 = new JButton("+");
-		button_plus1.setBackground(Color.BLACK);
+		button_plus1.setContentAreaFilled(false);
+		button_plus1.setOpaque(true);
+		button_plus1.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_plus1.setBorder(new LineBorder(Color.BLACK));
 		add(button_plus1);
 
 		Font fontField = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
 		textField_val4 = new JTextField();
-		textField_val4.setForeground(Color.WHITE);
-		textField_val4.setBackground(Color.BLACK);
+		textField_val4.setForeground(Color.BLACK);
+		textField_val4.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val4.setFont(fontField);
 		textField_val4.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_val4.setEditable(false);
@@ -71,8 +84,8 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val4.setBorder(null);
 
 		textField_val3 = new JTextField();
-		textField_val3.setForeground(Color.WHITE);
-		textField_val3.setBackground(Color.BLACK);
+		textField_val3.setForeground(Color.BLACK);
+		textField_val3.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val3.setFont(fontField);
 		textField_val3.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_val3.setEditable(false);
@@ -81,8 +94,8 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val3.setBorder(null);
 
 		textField_val2 = new JTextField();
-		textField_val2.setForeground(Color.WHITE);
-		textField_val2.setBackground(Color.BLACK);
+		textField_val2.setForeground(Color.BLACK);
+		textField_val2.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val2.setFont(fontField);
 		textField_val2.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_val2.setEditable(false);
@@ -91,8 +104,8 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val2.setBorder(null);
 
 		textField_val1 = new JTextField();
-		textField_val1.setForeground(Color.WHITE);
-		textField_val1.setBackground(Color.BLACK);
+		textField_val1.setForeground(Color.BLACK);
+		textField_val1.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val1.setFont(fontField);
 		textField_val1.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_val1.setEditable(false);
@@ -101,19 +114,31 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val1.setBorder(null);
 
 		JButton button_minus4 = new JButton("-");
-		button_minus4.setBackground(Color.BLACK);
+		button_minus4.setContentAreaFilled(false);
+		button_minus4.setOpaque(true);
+		button_minus4.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_minus4.setBorder(new LineBorder(Color.BLACK));
 		add(button_minus4);
 
 		JButton button_minus3 = new JButton("-");
-		button_minus3.setBackground(Color.BLACK);
+		button_minus3.setContentAreaFilled(false);
+		button_minus3.setOpaque(true);
+		button_minus3.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_minus3.setBorder(new LineBorder(Color.BLACK));
 		add(button_minus3);
 
 		JButton button_minus2 = new JButton("-");
-		button_minus2.setBackground(Color.BLACK);
+		button_minus2.setContentAreaFilled(false);
+		button_minus2.setOpaque(true);
+		button_minus2.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_minus2.setBorder(new LineBorder(Color.BLACK));
 		add(button_minus2);
 
 		JButton button_minus1 = new JButton("-");
-		button_minus1.setBackground(Color.BLACK);
+		button_minus1.setContentAreaFilled(false);
+		button_minus1.setOpaque(true);
+		button_minus1.setBackground(HackRFSweepSettingsUI.settingColor);
+		button_minus1.setBorder(new LineBorder(Color.BLACK));
 		add(button_minus1);
 
 		button_plus1.addActionListener(addListener(true, 1));
