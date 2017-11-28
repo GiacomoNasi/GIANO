@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -49,7 +51,7 @@ public class HackRFSweepSettingsUI extends JPanel
 	private static final long serialVersionUID = 7721079457485020637L;
 	private JLabel txtHackrfConnected;
 	
-	private JTabbedPane tabbedPane;
+	//private JTabbedPane tabbedPane;
 	private JPanel frequencyStartPanel, frequencyEndPanel, frequencyPanel; 
 	private JPanel FFTPanel, gainPanel, samplesPanel, samplingPanel;
 	private JPanel waterfallStartPanel, waterfallLengthPanel, waterfallPanel; 
@@ -60,7 +62,10 @@ public class HackRFSweepSettingsUI extends JPanel
 	private JPanel frequencyLayoutPanel, samplingLayoutPanel, waterfallLayoutPanel, peaksLayoutPanel, centerLayoutPanel, bottomLayoutPanel;
 	private FrequencySelectorPanel frequencySelectorStart;
 	private FrequencySelectorPanel frequencySelectorEnd;
-
+	
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu frequencyMenu, samplingMenu, waterfallMenu, peaksMenu, filterMenu;
+	
 	public static final Color mainColor = new Color(0x625954);
 	public static final Color settingColor = new Color(0x878f77);
 	
@@ -100,15 +105,23 @@ public class HackRFSweepSettingsUI extends JPanel
 	    UIManager.put("TabbedPane.selected",              Color.DARK_GRAY);
 	    //UIManager.put("TabbedPane.selectHighlight",       fgc);
 	    //UIManager.put("TabbedPane.borderHightlightColor", fgc);
-	    
-	    
 
-	    
-
-		tabbedPane = new JTabbedPane();
+		/*tabbedPane = new JTabbedPane();
 		tabbedPane.setOpaque(false);
-		tabbedPane.setBackground(mainColor);
+		tabbedPane.setBackground(mainColor);*/
 		
+		frequencyMenu = new JMenu("Frequency");
+		frequencyMenu.setForeground(Color.WHITE);
+		samplingMenu = new JMenu("Sampling");
+		samplingMenu.setForeground(Color.WHITE);
+		waterfallMenu = new JMenu("Waterfall");
+		waterfallMenu.setForeground(Color.WHITE);
+		peaksMenu = new JMenu("Peaks");
+		peaksMenu.setForeground(Color.WHITE);
+		filterMenu = new JMenu("Filter");
+		filterMenu.setForeground(Color.WHITE);
+		
+		menuBar.setBackground(mainColor);
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -184,13 +197,27 @@ public class HackRFSweepSettingsUI extends JPanel
 		peaksLayoutPanel.add(peaksPanel, BorderLayout.LINE_START);
 		
 		
-		tabbedPane.add("Frequency", frequencyLayoutPanel);
-		tabbedPane.add("Sampling", samplingLayoutPanel);
-		tabbedPane.add("Waterfall", waterfallLayoutPanel);
-		tabbedPane.add("Peaks", peaksLayoutPanel);	
+		/*tabbedPane.addTab("Frequency", frequencyLayoutPanel);
+		tabbedPane.addTab("Sampling", samplingLayoutPanel);
+		tabbedPane.addTab("Waterfall", waterfallLayoutPanel);
+		tabbedPane.addTab("Peaks", peaksLayoutPanel);	
+		tabbedPane.setVisible(false);
 		/*tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, new JButton(
 		        "+"));*/
-		add(tabbedPane, BorderLayout.NORTH);
+		//add(tabbedPane, BorderLayout.NORTH);
+		
+		frequencyMenu.add(frequencyLayoutPanel);
+		samplingMenu.add(samplingLayoutPanel);
+		waterfallMenu.add(waterfallLayoutPanel);
+		peaksMenu.add(peaksLayoutPanel);
+		filterMenu.add(centerLayoutPanel);
+		
+		menuBar.add(frequencyMenu);
+		menuBar.add(samplingMenu);
+		menuBar.add(waterfallMenu);
+		menuBar.add(peaksMenu);
+		menuBar.add(filterMenu);
+		add(menuBar, BorderLayout.LINE_START);
 		
 		/*tabbedPane.setBackgroundAt(0, mainColor);
 		tabbedPane.setBackgroundAt(1, mainColor);
@@ -201,13 +228,13 @@ public class HackRFSweepSettingsUI extends JPanel
 		centerPanel = new JPanel();
 		centerPanel.setBackground(mainColor);
 		centerLayoutPanel.add(centerPanel,BorderLayout.LINE_START);
-		add(centerLayoutPanel, BorderLayout.CENTER);
+		//add(centerLayoutPanel, BorderLayout.CENTER);
 		
 		bottomPanel = new JPanel();
 		bottomPanel.setBackground(mainColor);
 		bottomPanel.setLayout(new FlowLayout());
 		bottomLayoutPanel.add(bottomPanel, BorderLayout.LINE_START);
-		add(bottomLayoutPanel, BorderLayout.SOUTH);
+		add(bottomLayoutPanel, BorderLayout.LINE_END);
 		
 
 		

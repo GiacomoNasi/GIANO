@@ -5,7 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,12 +15,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -210,9 +214,9 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 				new BasicStroke(1f));
 		//		chart.getXYPlot().addRangeMarker(waterfallPaletteStartMarker);
 		//		chart.getXYPlot().addRangeMarker(waterfallPaletteEndMarker);
-		JCheckBox settingsVisibility = new JCheckBox("Show Settings");	
+		//JCheckBox settingsVisibility = new JCheckBox("Show Settings");	
 		settingsPanel = new HackRFSweepSettingsUI(this);
-		settingsPanel.setVisible(false);
+		/*settingsPanel.setVisible(false);
 		settingsVisibility.addActionListener(new ActionListener() {
 			
 			@Override
@@ -220,7 +224,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 				settingsPanel.setVisible(!settingsPanel.isVisible());
 				
 			}
-		});
+		});*/
 		
 		
 		f = new JFrame();
@@ -234,8 +238,8 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		splitPane.setBorder(null);
 		f.add(splitPane, BorderLayout.CENTER);
 		f.setMinimumSize(new Dimension(600, 600));
-		settingsContainerPanel.add(settingsVisibility, BorderLayout.NORTH);
-		settingsContainerPanel.add(settingsPanel, BorderLayout.CENTER);
+		//settingsContainerPanel.add(settingsVisibility, BorderLayout.NORTH);
+		settingsContainerPanel.add(settingsPanel, BorderLayout.NORTH);
 		f.add(settingsContainerPanel, BorderLayout.NORTH);
 		//f.add(settingsVisibility, BorderLayout.NORTH);
 		addTabbedPane();
@@ -310,6 +314,8 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		rend.setBasePaint(Color.white);
 		plot.setBackgroundPaint(palette4);
 		chart.setBackgroundPaint(palette4);
+		
+		
 		rend.setSeriesPaint(1, palette1);
 
 		startLauncherThread();
