@@ -39,8 +39,7 @@ public class DatasetSpectrumPeak extends DatasetSpectrum
 		spectrumPeak = new float[datapoints];
 		Arrays.fill(spectrumPeak, spectrumInitPower);
 		spectrumPeakHold = new float[datapoints];
-		Arrays.fill(spectrumPeakHold, spectrumInitPower);
-		
+		Arrays.fill(spectrumPeakHold, spectrumInitPower);		
 
 	}
 

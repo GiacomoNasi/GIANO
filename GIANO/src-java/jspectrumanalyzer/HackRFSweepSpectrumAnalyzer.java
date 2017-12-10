@@ -17,8 +17,12 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -26,6 +30,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -60,12 +65,14 @@ import org.jfree.ui.TextAnchor;
 
 import jspectrumanalyzer.core.DatasetSpectrum;
 import jspectrumanalyzer.core.DatasetSpectrumPeak;
+import jspectrumanalyzer.core.DatasetTresholdDetector;
 import jspectrumanalyzer.core.FFTBins;
 import jspectrumanalyzer.core.HackRFSettings;
 import jspectrumanalyzer.core.HackRFSweepSettingsUI;
 import jspectrumanalyzer.core.IMain;
 import jspectrumanalyzer.core.PowerCalibration;
 import jspectrumanalyzer.core.SpurFilter;
+import jspectrumanalyzer.core.TextAreaFrame;
 import jspectrumanalyzer.core.WaterfallPlot;
 import jspectrumanalyzer.core.ZoomChartPanel;
 import jspectrumanalyzer.nativebridge.HackRFSweepDataCallback;
@@ -335,6 +342,33 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		/*JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.add("prova", new JPanel());
 		f.add(tabbedPane, BorderLayout.NORTH);*/
+		
+	}
+	
+	private void addTresholdActionListener(){
+		DatasetTresholdDetector detector = new DatasetTresholdDetector(datasetSpectrum);
+		if(settingsPanel.getSearchTreasholdButton().getActionListeners().length == 0)
+			settingsPanel.getSearchTreasholdButton().addActionListener(new ActionListener() {			
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					System.out.println("PERFORMED");
+					double freqStart = settingsPanel.getFrequencySelectorStart().getValue();
+					double freqEnd = settingsPanel.getFrequencySelectorEnd().getValue();
+					
+					String message = "";				
+					float treshold = Float.parseFloat(settingsPanel.getTresholdSpinner().getValue().toString());
+					
+					Map<Double, Double> intervals = detector.getIntervals(treshold, freqStart, freqEnd);  
+					for(Double start : intervals.keySet())
+						message += "[" + (start/1000000) + ",\t" + (intervals.get(start)/1000000) + "]\n";
+					
+					TextAreaFrame frame = new TextAreaFrame();
+					frame.getTextArea().setText(message);
+					frame.getFrame().setTitle("Frequence ranges over " + treshold + "dB");
+					frame.getFrame().setVisible(true);
+					System.out.println("END");
+				}
+			});
 		
 	}
 
@@ -638,7 +672,8 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 
 //			PowerCalibration calibration	 = new PowerCalibration(-45, -12.5, 40); 
 			
-			datasetSpectrum 		= new DatasetSpectrumPeak(binHz, parameterMinFreqMHz, parameterMaxFreqMHz, spectrumInitValue, 15, 30000);
+			datasetSpectrum 		= new DatasetSpectrumPeak(binHz, parameterMinFreqMHz, parameterMaxFreqMHz, spectrumInitValue, 15, 30000);	
+			addTresholdActionListener();
 			chart.getXYPlot().getDomainAxis().setRange(parameterMinFreqMHz, parameterMaxFreqMHz);
 			
 			float maxPeakJitterdB	= 6;
@@ -728,6 +763,7 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 			}
 
 		}
+		
 
 	}
 

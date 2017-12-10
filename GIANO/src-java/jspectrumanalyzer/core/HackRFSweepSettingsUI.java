@@ -3,6 +3,7 @@ package jspectrumanalyzer.core;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -17,10 +18,12 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URI;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -32,6 +35,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JSpinner.ListEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -59,16 +64,25 @@ public class HackRFSweepSettingsUI extends JPanel
 	private JPanel FFTPanel, gainPanel, samplesPanel, samplingPanel;
 	private JPanel waterfallStartPanel, waterfallLengthPanel, waterfallPanel; 
 	private JPanel peaksPanel;
+	private JPanel tresholdPanel;
 
 	private JPanel centerPanel, bottomPanel;
 	
 	private JPanel frequencyLayoutPanel, samplingLayoutPanel, waterfallLayoutPanel, peaksLayoutPanel, centerLayoutPanel, bottomLayoutPanel;
 	private FrequencySelectorPanel frequencySelectorStart;
 	private FrequencySelectorPanel frequencySelectorEnd;
+	private JPanel tresholdLayoutPanel;
 	
 	private JMenuBar menuBar = new JMenuBar();
-	private JMenu frequencyMenu, samplingMenu, waterfallMenu, peaksMenu, filterMenu;
+	private JMenu frequencyMenu, samplingMenu, waterfallMenu, peaksMenu, filterMenu, tresholdMenu;
+	private JButton searchTreasholdButton;
+	private JTextField tresholdTextField;
+	private JSpinner tresholdSpinner;
 	
+	public JButton getSearchTreasholdButton() {
+		return searchTreasholdButton;
+	}
+
 	public static final Color mainColor = new Color(0x625954);
 	public static final Color settingColor = new Color(0x878f77);
 	
@@ -123,6 +137,8 @@ public class HackRFSweepSettingsUI extends JPanel
 		peaksMenu.setForeground(Color.WHITE);
 		filterMenu = new JMenu("Filter");
 		filterMenu.setForeground(Color.WHITE);
+		tresholdMenu = new JMenu("Treshold");
+		tresholdMenu.setForeground(Color.WHITE);
 		
 		menuBar.setBackground(mainColor);
 		
@@ -151,6 +167,8 @@ public class HackRFSweepSettingsUI extends JPanel
 		bottomLayoutPanel = new JPanel();
 		bottomLayoutPanel.setBackground(mainColor);
 		bottomLayoutPanel.setLayout(new BorderLayout());
+		tresholdLayoutPanel = new JPanel();
+		tresholdLayoutPanel.setBackground(mainColor);
 		
 		frequencyStartPanel = new JPanel();
 		frequencyStartPanel.setBackground(mainColor);
@@ -199,6 +217,20 @@ public class HackRFSweepSettingsUI extends JPanel
 		peaksPanel.setLayout(new BorderLayout());
 		peaksLayoutPanel.add(peaksPanel, BorderLayout.LINE_START);
 		
+		tresholdPanel = new JPanel();
+		searchTreasholdButton = new JButton();
+		searchTreasholdButton.setText("RICERCA");
+		/*tresholdTextField = new JFormattedTextField(DoubleFormat.getNumberInstance());
+		tresholdTextField.setMaximumSize(new Dimension(0, -40));
+		tresholdTextField.setColumns(10);*/
+		SpinnerModel model = new SpinnerNumberModel(-60, -110, 0, 10);     
+		tresholdSpinner = new JSpinner(model);
+		tresholdPanel.add(searchTreasholdButton);
+		tresholdPanel.add(tresholdSpinner);
+		tresholdLayoutPanel.add(tresholdPanel);
+		tresholdMenu.add(tresholdLayoutPanel);
+		//TODO 
+		
 		
 		/*tabbedPane.addTab("Frequency", frequencyLayoutPanel);
 		tabbedPane.addTab("Sampling", samplingLayoutPanel);
@@ -220,6 +252,7 @@ public class HackRFSweepSettingsUI extends JPanel
 		menuBar.add(waterfallMenu);
 		menuBar.add(peaksMenu);
 		menuBar.add(filterMenu);
+		menuBar.add(tresholdMenu);
 		add(menuBar, BorderLayout.LINE_START);
 		
 		/*tabbedPane.setBackgroundAt(0, mainColor);
@@ -501,6 +534,10 @@ public class HackRFSweepSettingsUI extends JPanel
 		});
 	}
 	
+	public JSpinner getTresholdSpinner() {
+		return tresholdSpinner;
+	}
+
 	public FrequencySelectorPanel getFrequencySelectorStart() {
 		return frequencySelectorStart;
 	}

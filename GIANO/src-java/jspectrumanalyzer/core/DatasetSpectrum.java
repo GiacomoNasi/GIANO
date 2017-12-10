@@ -151,8 +151,11 @@ public class DatasetSpectrum implements Cloneable
 	 */
 	public double getFrequency(int index)
 	{
-		double freq = (freqStartHz + fftBinSizeHz * index);
-		return freq;
+		return freqStartHz + fftBinSizeHz * index;
+	}
+	
+	public int indexOf(double freq){
+		return (int) ((freq - freqStartHz) / fftBinSizeHz);
 	}
 
 	public float getPower(int index)
@@ -166,6 +169,7 @@ public class DatasetSpectrum implements Cloneable
 	}
 	public float[] getSpectrumArray()
 	{
+		System.out.println("SPECTRUM" + spectrum);
 		return spectrum;
 	}
 	
