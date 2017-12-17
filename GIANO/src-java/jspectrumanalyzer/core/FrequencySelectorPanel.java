@@ -74,7 +74,7 @@ public class FrequencySelectorPanel extends JPanel
 		Font fontField = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
 		textField_val4 = new JTextField();
-		textField_val4.setForeground(Color.BLACK);
+		textField_val4.setForeground(Color.WHITE);
 		textField_val4.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val4.setFont(fontField);
 		textField_val4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -84,7 +84,7 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val4.setBorder(null);
 
 		textField_val3 = new JTextField();
-		textField_val3.setForeground(Color.BLACK);
+		textField_val3.setForeground(Color.WHITE);
 		textField_val3.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val3.setFont(fontField);
 		textField_val3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -94,7 +94,7 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val3.setBorder(null);
 
 		textField_val2 = new JTextField();
-		textField_val2.setForeground(Color.BLACK);
+		textField_val2.setForeground(Color.WHITE);
 		textField_val2.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val2.setFont(fontField);
 		textField_val2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,7 +104,7 @@ public class FrequencySelectorPanel extends JPanel
 		textField_val2.setBorder(null);
 
 		textField_val1 = new JTextField();
-		textField_val1.setForeground(Color.BLACK);
+		textField_val1.setForeground(Color.WHITE);
 		textField_val1.setBackground(HackRFSweepSettingsUI.mainColor);
 		textField_val1.setFont(fontField);
 		textField_val1.setHorizontalAlignment(SwingConstants.CENTER);

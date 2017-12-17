@@ -17,20 +17,20 @@ public class PeakFalloutPanel extends JPanel{
 		this.setBackground(Color.BLACK);
 		
 		shortButton = new JRadioButton("0,5");
-		shortButton.setForeground(Color.BLACK);
+		shortButton.setForeground(Color.WHITE);
 		shortButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		
 		mediumButton = new JRadioButton("1");
-		mediumButton.setForeground(Color.BLACK);
+		mediumButton.setForeground(Color.WHITE);
 		mediumButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		longButton = new JRadioButton("5");
-		longButton.setForeground(Color.BLACK);
+		longButton.setForeground(Color.WHITE);
 		longButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		
 		infButton = new JRadioButton("INFINITE");
-		infButton.setForeground(Color.BLACK);
+		infButton.setForeground(Color.WHITE);
 		infButton.setBackground(HackRFSweepSettingsUI.mainColor);
 		infButton.setSelected(true);
 		

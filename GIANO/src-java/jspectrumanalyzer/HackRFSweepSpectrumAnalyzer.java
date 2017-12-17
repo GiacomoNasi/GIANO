@@ -156,7 +156,9 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		NumberAxis rangeAxis = ((NumberAxis) plot.getRangeAxis());
 		XYLineAndShapeRenderer rend = new XYLineAndShapeRenderer();
 		rend.setBaseShapesVisible(false);
-
+		
+		chart.getTitle().setPaint(Color.WHITE);
+		
 		chartPanel = new ZoomChartPanel(chart, this);
 		chartPanel.setMaximumDrawWidth(4096);
 		chartPanel.setMaximumDrawHeight(2160);
