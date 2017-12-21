@@ -26,8 +26,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -46,6 +48,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.block.LineBorder;
+import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
 
 import jspectrumanalyzer.HackRFSweepSpectrumAnalyzer;
 import jspectrumanalyzer.Version;
@@ -60,11 +63,12 @@ public class HackRFSweepSettingsUI extends JPanel
 	private JLabel txtHackrfConnected;
 	
 	//private JTabbedPane tabbedPane;
-	private JPanel frequencyStartPanel, frequencyEndPanel, frequencyPanel; 
+	private JPanel frequencyStartPanel, frequencyEndPanel, frequencyTitlePanel,frequencyPanel; 
 	private JPanel FFTPanel, gainPanel, samplesPanel, samplingPanel;
 	private JPanel waterfallStartPanel, waterfallLengthPanel, waterfallPanel; 
 	private JPanel peaksPanel;
 	private JPanel tresholdPanel;
+	private JPanel presetsLayoutPanel, presetsUpperPanel, presetsCenterPanel, presetsSouthPanel;
 
 	private JPanel centerPanel, bottomPanel;
 	
@@ -74,10 +78,14 @@ public class HackRFSweepSettingsUI extends JPanel
 	private JPanel tresholdLayoutPanel;
 	
 	private JMenuBar menuBar = new JMenuBar();
-	private JMenu frequencyMenu, samplingMenu, waterfallMenu, peaksMenu, filterMenu, tresholdMenu;
+	private JMenu frequencyMenu, samplingMenu, waterfallMenu, peaksMenu, filterMenu, tresholdMenu, presetsMenu;
 	private JButton searchTreasholdButton;
 	private JTextField tresholdTextField;
 	private JSpinner tresholdSpinner;
+	
+	private IOPresets ioPresets = new IOPresets();
+	private JList presetList;
+	private JButton newPresetButton, savePresetButton, modifyPresetButton, deletePresetButton, selectPresetButton;
 	
 	public JButton getSearchTreasholdButton() {
 		return searchTreasholdButton;
@@ -139,6 +147,8 @@ public class HackRFSweepSettingsUI extends JPanel
 		filterMenu.setForeground(Color.WHITE);
 		tresholdMenu = new JMenu("Treshold");
 		tresholdMenu.setForeground(Color.WHITE);
+		presetsMenu = new JMenu("Presets");
+		presetsMenu.setForeground(Color.WHITE);
 		
 		menuBar.setBackground(mainColor);
 		
@@ -169,17 +179,24 @@ public class HackRFSweepSettingsUI extends JPanel
 		bottomLayoutPanel.setLayout(new BorderLayout());
 		tresholdLayoutPanel = new JPanel();
 		tresholdLayoutPanel.setBackground(mainColor);
+		presetsLayoutPanel = new JPanel();
+		presetsLayoutPanel.setBackground(mainColor);
+		presetsLayoutPanel.setLayout(new BorderLayout());
 		
 		frequencyStartPanel = new JPanel();
 		frequencyStartPanel.setBackground(mainColor);
 		frequencyEndPanel = new JPanel();
 		frequencyEndPanel.setBackground(mainColor);
 		frequencyPanel = new JPanel();
+		frequencyPanel.setLayout(new BorderLayout());
 		frequencyPanel.setBackground(mainColor);
 		frequencyStartPanel.setLayout(new BorderLayout());
 		frequencyEndPanel.setLayout(new BorderLayout());
-		frequencyPanel.add(frequencyStartPanel);
-		frequencyPanel.add(frequencyEndPanel);
+		frequencyTitlePanel = new JPanel();
+		frequencyTitlePanel.setBackground(mainColor);
+		frequencyPanel.add(frequencyTitlePanel, BorderLayout.NORTH);
+		frequencyPanel.add(frequencyStartPanel, BorderLayout.LINE_START);
+		frequencyPanel.add(frequencyEndPanel, BorderLayout.LINE_END);
 		frequencyLayoutPanel.add(frequencyPanel, BorderLayout.LINE_START);
 		
 		FFTPanel = new JPanel();
@@ -236,6 +253,62 @@ public class HackRFSweepSettingsUI extends JPanel
 		tresholdMenu.add(tresholdLayoutPanel);
 		//TODO 
 		
+		//Presets
+		presetsUpperPanel = new JPanel();
+		presetsUpperPanel.setBackground(mainColor);
+		presetsUpperPanel.setForeground(Color.WHITE);
+		
+		presetsCenterPanel = new JPanel();
+		presetsCenterPanel.setBackground(mainColor);
+		presetsCenterPanel.setForeground(Color.WHITE);
+		
+		presetsSouthPanel = new JPanel();
+		presetsSouthPanel.setBackground(mainColor);
+		presetsSouthPanel.setForeground(Color.WHITE);
+		
+		newPresetButton = new JButton("NEW");
+		newPresetButton.setBackground(settingColor);
+		newPresetButton.setContentAreaFilled(false);
+		newPresetButton.setOpaque(true);
+		newPresetButton.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
+		
+		selectPresetButton = new JButton("SELECT");
+		selectPresetButton.setBackground(settingColor);
+		selectPresetButton.setContentAreaFilled(false);
+		selectPresetButton.setOpaque(true);
+		selectPresetButton.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
+
+		modifyPresetButton = new JButton("MODIFY");
+		modifyPresetButton.setBackground(settingColor);
+		modifyPresetButton.setContentAreaFilled(false);
+		modifyPresetButton.setOpaque(true);
+		modifyPresetButton.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
+		
+		deletePresetButton = new JButton("DELETE");
+		deletePresetButton.setBackground(settingColor);
+		deletePresetButton.setContentAreaFilled(false);
+		deletePresetButton.setOpaque(true);
+		deletePresetButton.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
+		
+		savePresetButton = new JButton("SAVE");
+		savePresetButton.setBackground(settingColor);
+		savePresetButton.setContentAreaFilled(false);
+		savePresetButton.setOpaque(true);
+		savePresetButton.setBorder((Border) new javax.swing.border.LineBorder(Color.BLACK));
+		
+		String[] presets= ioPresets.getListName();
+		presetList = new JList<String>(presets);
+		
+		presetsUpperPanel.add(newPresetButton);
+		presetsCenterPanel.add(presetList);
+		presetsSouthPanel.add(selectPresetButton);
+		presetsSouthPanel.add(modifyPresetButton);
+		presetsSouthPanel.add(deletePresetButton);
+		presetsLayoutPanel.add(presetsUpperPanel, BorderLayout.NORTH);
+		presetsLayoutPanel.add(presetsCenterPanel, BorderLayout.CENTER);
+		presetsLayoutPanel.add(presetsSouthPanel, BorderLayout.SOUTH);
+		presetsMenu.add(presetsLayoutPanel);
+		
 		
 		/*tabbedPane.addTab("Frequency", frequencyLayoutPanel);
 		tabbedPane.addTab("Sampling", samplingLayoutPanel);
@@ -251,6 +324,7 @@ public class HackRFSweepSettingsUI extends JPanel
 		waterfallMenu.add(waterfallLayoutPanel);
 		peaksMenu.add(peaksLayoutPanel);
 		filterMenu.add(centerLayoutPanel);
+		presetsMenu.add(presetsLayoutPanel);
 		
 		menuBar.add(frequencyMenu);
 		menuBar.add(samplingMenu);
@@ -258,6 +332,7 @@ public class HackRFSweepSettingsUI extends JPanel
 		menuBar.add(peaksMenu);
 		menuBar.add(filterMenu);
 		menuBar.add(tresholdMenu);
+		menuBar.add(presetsMenu);
 		add(menuBar, BorderLayout.LINE_START);
 		
 		/*tabbedPane.setBackgroundAt(0, mainColor);
@@ -280,7 +355,12 @@ public class HackRFSweepSettingsUI extends JPanel
 
 		
 		//setLayout(new MigLayout("", "[123.00px,grow,leading]", "[][20px][][][20px][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
-
+		String frequencyTitle = "Default";
+		JLabel lblFrequencyTitle = new JLabel("\t"+frequencyTitle+"\t");	
+		lblFrequencyTitle.setForeground(Color.WHITE);
+		frequencyTitlePanel.add(lblFrequencyTitle, BorderLayout.CENTER);
+		
+		
 		JLabel lblNewLabel = new JLabel("Frequency start [MHz]");
 		lblNewLabel.setForeground(Color.WHITE);
 		//lblNewLabel.setForeground(Color.WHITE);
