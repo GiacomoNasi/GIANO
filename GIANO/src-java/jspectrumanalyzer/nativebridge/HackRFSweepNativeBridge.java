@@ -12,7 +12,7 @@ import hackrfsweep.HackrfSweepLibrary.hackrf_sweep_lib_start__fft_power_callback
 
 public class HackRFSweepNativeBridge
 {
-	public static final String			JNA_LIBRARY_NAME	= "hackrf-sweep";
+	public static final String			JNA_LIBRARY_NAME	= "hackrf-sweep"; 
 	public static final NativeLibrary	JNA_NATIVE_LIB;
 	static
 	{
@@ -21,6 +21,7 @@ public class HackRFSweepNativeBridge
 		 * jnidispatch.dll is used directly instead of JNA bundled jar, because it is much faster to load
 		 */
 		String pathPrefix	= "./"+Platform.RESOURCE_PREFIX+"/";
+		System.out.println(pathPrefix);
 		System.setProperty("jna.boot.library.path", pathPrefix);
 //		Native.DEBUG_JNA_LOAD	= true;
 //		Native.DEBUG_LOAD	= true;

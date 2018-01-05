@@ -8,12 +8,17 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Paint;
+import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +76,7 @@ import jspectrumanalyzer.core.HackRFSettings;
 import jspectrumanalyzer.core.HackRFSweepSettingsUI;
 import jspectrumanalyzer.core.IMain;
 import jspectrumanalyzer.core.PowerCalibration;
+import jspectrumanalyzer.core.PresetErrorFrame;
 import jspectrumanalyzer.core.SpurFilter;
 import jspectrumanalyzer.core.TextAreaFrame;
 import jspectrumanalyzer.core.WaterfallPlot;
@@ -338,6 +344,20 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 				stopHackrfSweep();
 			}
 		}));
+		
+		//Aggiorno presets
+		f.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					settingsPanel.getIOPresets().aggiornaFile();
+				} catch (IOException e1) {
+					new PresetErrorFrame(2);
+				}
+			}
+			
+		});
 	}
 
 	private void addTabbedPane() {
@@ -375,12 +395,12 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 	}
 
 	private void addChartMouseMarkers() {
-		ValueMarker freqMarker	= new ValueMarker(0, Color.WHITE, new BasicStroke(1f));
+		ValueMarker freqMarker	= new ValueMarker(0, new Color(0,0,0,0), new BasicStroke(1f));
 		freqMarker.setLabelPaint(Color.white);
 		freqMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
 		freqMarker.setLabelTextAnchor(TextAnchor.TOP_LEFT);
 		freqMarker.setLabelFont(font);
-		ValueMarker signalMarker	= new ValueMarker(0, Color.WHITE, new BasicStroke(1f));
+		ValueMarker signalMarker	= new ValueMarker(0, new Color(0,0,0,0), new BasicStroke(1f));
 		signalMarker.setLabelPaint(Color.white);
 		signalMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
 		signalMarker.setLabelTextAnchor(TextAnchor.BOTTOM_RIGHT);
@@ -956,4 +976,5 @@ public class HackRFSweepSpectrumAnalyzer implements HackRFSettings, HackRFSweepD
 		settingsPanel.getFrequencySelectorStart().setValue((int) freqStart);
 		settingsPanel.getFrequencySelectorEnd().setValue((int) freqEnd);
 	}
+	
 }

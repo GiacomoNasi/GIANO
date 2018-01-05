@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="GIANO/src-java"/>
+	<classpathentry kind="lib" path="GIANO/lib/hackrf-sweep-jna.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jna/jna-min-4.3.0.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jna/win32-x86-64.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jna/win32-x86.jar"/>
+	<classpathentry kind="lib" path="GIANO/lib/jnaerator/jnaerator-0.13-20150328.111636-4-shaded.jar"/>
+	<classpathentry kind="lib" path="GIANO/miglayout15-swing.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

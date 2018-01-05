@@ -41,6 +41,8 @@ public class ZoomChartPanel extends ChartPanel{
 						rangeMarker = null;
 	private IMain main;
 	
+	private boolean dragged = false;
+	
 	private static final String emptyLabel = "(-; -)";
 	
 	public ZoomChartPanel(JFreeChart chart, IMain main) {
@@ -92,7 +94,10 @@ public class ZoomChartPanel extends ChartPanel{
 				
 				Rectangle2D subplotArea = getChartRenderingInfo().getPlotInfo().getDataArea();
 				freqEnd = plot.getDomainAxis().java2DToValue(x, subplotArea, plot.getDomainAxisEdge());
-				main.updateFrequency(freqStart, freqEnd);
+				if(dragged) {
+					main.updateFrequency(freqStart, freqEnd);
+					dragged = false;
+				}
 				zoomLabel.setVisible(false);
 				
 				plot.clearDomainMarkers();
@@ -132,9 +137,10 @@ public class ZoomChartPanel extends ChartPanel{
 		});
 		
 		addMouseMotionListener(new MouseMotionAdapter() {
-			
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				dragged = true;
 				XYPlot plot = getChart().getXYPlot();
 				double x = e.getX();	
 				Rectangle2D subplotArea = getChartRenderingInfo().getPlotInfo().getDataArea();

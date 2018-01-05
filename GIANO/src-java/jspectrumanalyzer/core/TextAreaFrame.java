@@ -8,6 +8,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
@@ -60,6 +62,8 @@ public class TextAreaFrame {
 		
 		
 		textArea = new JTextArea();
+		textArea.setBackground(HackRFSweepSettingsUI.mainColor);
+		textArea.setForeground(Color.WHITE);
 		textArea.setEditable(false);
 		frame.getContentPane().add(textArea, BorderLayout.CENTER);
 		
